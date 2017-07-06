@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="asmlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DetectDebugger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Indexes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Inline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MetaFSM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MetaRandom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MetaString4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObfuscatedCall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObfuscatedCallWithPredicate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Unroller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\AntiAttach.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\ApiBreakPointDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\CheckSumCalculator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\CodeTraceTimeDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\DirectDebuggerDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\HardwareBreakPointDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\IndirectDebuggerDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\ModuleDebuggerDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\ParentProcessDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\ProcessDebuggerDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\SandBoxDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\SehDebuggerDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\SpyProcessToolDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\VirtualMachineDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ARF\WindowDebuggerDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lfsr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CrackMe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DetectDebugger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\AntiAttachFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\ApiBreakPointDetectionFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\CheckSumCalculatorFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\CodeTraceTimeDetectionFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\DirectDebuggerDetectionFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\HardwareBreakPointDetectionFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\IndirectDebuggerDetectionFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\ModuleDebuggerDetectionFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\ParentProcessDetectionFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\ProcessDebuggerDetectionFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\SandBoxDetectionFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\SehDebuggerDetectionFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\VirtualMachineDetectionFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\WindowDebuggerDetectionFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ARF\SpyProcessToolDetectionFunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lfsr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="lfsr.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lfsr.b" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="CrackMe">
+</Property><Property Name="解决方案文件" Value="E:\work\52pojie\Cracking\CTF\PEDIY_CTF_2017\CrackMe\CrackMe.sln">
+</Property><Property Name="Date" Value="2017年6月30日">
+</Property><Property Name="Time" Value="11:43">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="CrackMe.sln" Description="文件已成功备份为 E:\work\52pojie\Cracking\CTF\PEDIY_CTF_2017\CrackMe\CrackMe.sln.old">
+</Event><Event ErrorLevel="2" Project="E:\work\52pojie\Cracking\CTF\PEDIY_CTF_2017\CrackMe\CrackMe\CrackMe.vcxproj" Source="CrackMe" Description="因项目文件已损坏而无法加载该项目。">
+</Event><Event ErrorLevel="2" Project="CrackMe" Source="CrackMe\CrackMe.vcxproj" Description="项目升级失败。">
+</Event><Event ErrorLevel="3" Project="CrackMe" Source="CrackMe\CrackMe.vcxproj" Description="未转换">
+</Event><Event ErrorLevel="0" Project="" Source="CrackMe.sln" Description="解决方案文件不需要转换。">
+</Event><Event ErrorLevel="3" Project="" Source="CrackMe.sln" Description="无需转换">
+</Event></UpgradeLog>

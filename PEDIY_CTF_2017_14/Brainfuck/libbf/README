@@ -1,0 +1,96 @@
+/***************************************************************************
+        libbf - Free BrainFuck interpreter, optimizer, compiler library
+                            -------------------
+    copyright            : (C) 2005-2006 by Even Rouault
+    email                : even 'dot' rouault 'at' mines-paris 'dot' org
+***************************************************************************/
+
+-----------------------------------------------------------------------------------------
+SHORT DESCRIPTION
+
+libbf is a free portable library for Brainfuck fast interpretation, optimization, compilation and execution. 
+It is developped under the GNU Lesser General Public License (GNU LGPL).
+
+-----------------------------------------------------------------------------------------
+DETAILED DESCRIPTION
+
+The library supports regular Brainfuck source code as input, composed of
+the following 8 opcodes
+                            [ ] + - < > . ,
+
+The library includes :
+* a naive Brainfuck interpreter
+* a less naive Brainfuck interpreter
+* a FAST! Brainfuck interpreter with optimization passes
+* a cross-compiler with optimization passes for the following target architectures :
+  i386, x86_64 (amd64), ppc, arm, sparc, mips, mipsel
+* a in-memory Brainfuck optimizer-compiler and launcher for
+  those architectures
+
+The optimizer-interpreter includes a profiling tool.
+The optimizer-interpreter/compiler includes a step-by-step memory display.
+Brainfuck code can be output can be dumped into equivalent C or Java code.
+
+The optimization process transforms the 8 Brainfuck opcodes into a slightly larger
+opcode set enabling basic and complex expression detection (affectation, addition/substraction/multiplication)
+and simplifications, loop removal, etc...
+
+The library supports many sizes for the Brainfuck data cell (regular Brainfuck data cell is 8 bits) :
+* 8, 16, 32, 64 bits for the various interpreters
+* 8, 16, 32, 64, 64n bits for the compiler for 64 bits supported architectures (x86_64)
+* 8, 16, 32, 32n bits for the compiler for 32 bits supported architectures (i386, ppc, arm, sparc, mips, mipsel)
+
+For i386 and x86_64 compiled code execution (under GNU/Linux, Win32, FreeBSD, OpenBSD), the library offers
+a suspend-and-resume feature.
+
+The library offers a rather nice "free" dynamic memory allocation feature for running brainfuck code.
+It works through page protection mechanism and catching of SIGSEGV signals.
+It has been successfully tested for the following cases:
+* GNU/Linux x86_64 optimizer-interpreter and compiler
+* GNU/Linux / Win32 / FreeBSD / OpenBSD i386 optimizer-interpreter and compiler
+* Solaris SPARC optimizer-interpreter and compiler
+* GNU/Linux ppc optimizer-interpreter and compiler
+
+Dynamic allocation should also work for the optimizer-interpreter for all GNU/Linux hosts.
+
+Last added feature : a converter from (a small subset of) C code to BrainFuck code !
+
+-----------------------------------------------------------------------------------------
+COMPILATION ENVIRONMENT
+
+The project requires GCC 3.x or later to be compiled.
+Currently, compilation and executation have been successfull under the
+following environments :
+
+* GNU/Linux i386
+* GNU/Linux x86_64
+* Win32 (compiled with mingw32)
+* FreeBSD 5.4/6.0 i386
+* OpenBSD i386
+* Solaris 2.8 SPARC
+* GNU/Linux ppc, arm, sparc, mips, mipsel through gcc cross-compilation
+  and qemu user-space emulation
+
+It should be portable on most POSIX compatible OS.
+
+-----------------------------------------------------------------------------------------
+HOW TO
+
+* compile :                                "make libbf"
+* run an automated test suite              "make test-optimizer"
+* run another automated test suite         "make test-compiler"
+* run the simple (=slow) interpreter :     "./libbf --interpreter-char test/mandelbrot.b"
+* run the interpreter optimizer :          "./libbf --interpreter-optimizer-char test/mandelbrot.b"
+*                                          "./libbf --interpreter-optimizer-int test/yapi.b"
+* compile-and-run :                        "./libbf --compile-execute-int test/yapi.b"
+* display the optimized equivalent C code: "./libbf --interpreter-optimizer-cdump-int test/yapi.b"
+* convert the test C code to BF:           "./libbf --c-to-bf test/test.c"
+
+-----------------------------------------------------------------------------------------
+POTENTIAL LEGAL ISSUES
+
+Not all tests programs ("test" subdir) have any notification of their ownership.  If you
+find here a brainfuck program written by you without credits, tell
+me (Even Rouault, even 'dot' rouault 'at' mines-paris 'dot' org) about it. The original
+archive was collected by Jeff Johnston and I've found the tests programs at
+http://esoteric.sange.fi/brainfuck/
