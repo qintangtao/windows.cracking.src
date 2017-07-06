@@ -1,0 +1,549 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\EasyDbg.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON1               ICON    DISCARDABLE     "xx.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 65
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 EasyDbg"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDI_ICON1,IDC_STATIC,11,17,21,21
+    LTEXT           "EasyDbg 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2011  evilkis",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+    LTEXT           "Email:evilkis@163.com",IDC_STATIC,38,38,147,14
+END
+
+IDD_EASYDBG_DIALOG DIALOGEX 0, 0, 668, 471
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_ACCEPTFILES | WS_EX_APPWINDOW
+CAPTION "EasyDbg"
+MENU IDR_MENU1
+FONT 9, "宋体"
+BEGIN
+    CONTROL         "List1",IDC_LIST1,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | WS_BORDER | WS_TABSTOP,507,16,144,220
+    GROUPBOX        "寄存器",IDC_STATIC,498,4,159,240
+    GROUPBOX        "反汇编",IDC_STATIC,5,7,343,236
+    GROUPBOX        "命令输入",IDC_STATIC,262,426,396,30
+    GROUPBOX        "结果显示",IDC_STATIC,256,248,404,174
+    LISTBOX         IDC_LIST4,262,259,390,156,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT1,269,435,379,14,ES_WANTRETURN
+    CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | WS_BORDER | 
+                    WS_TABSTOP,11,298,232,154
+    GROUPBOX        "HEX数据",IDC_STATIC,5,285,248,173
+    EDITTEXT        EDIT_DATA,9,269,110,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "显示内存",BTN_SHOWDATA,127,269,50,14
+    CONTROL         "List3",IDC_LIST3,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | 
+                    WS_TABSTOP,13,17,330,217
+    CTEXT           "当前操作状态:",IDC_STATIC,11,249,56,12,SS_CENTERIMAGE
+    LTEXT           "",IDC_STATE,72,249,170,14
+    GROUPBOX        "堆栈",IDC_STATIC,351,7,142,214
+    CONTROL         "List5",IDC_LIST5,"SysListView32",LVS_REPORT | WS_BORDER | 
+                    WS_TABSTOP,357,18,131,199
+    EDITTEXT        IDC_API,354,227,88,15,ES_AUTOHSCROLL
+    PUSHBUTTON      "API断点",BTN_API,444,226,52,14
+END
+
+IDD_VIRTUALMEMORY DIALOG DISCARDABLE  0, 0, 379, 242
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "进程内存"
+FONT 10, "宋体"
+BEGIN
+    CONTROL         "List1",IDC_LIST1,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | WS_BORDER | WS_TABSTOP,5,3,368,223
+END
+
+IDD_DIALOG1 DIALOG DISCARDABLE  0, 0, 379, 265
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "进程模块"
+FONT 10, "宋体"
+BEGIN
+    CONTROL         "List1",IDC_LIST1,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | WS_BORDER | WS_TABSTOP,7,7,365,251
+END
+
+IDD_BPSETING DIALOG DISCARDABLE  0, 0, 274, 180
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "断点设置"
+FONT 10, "宋体"
+BEGIN
+    GROUPBOX        "断点类型",IDC_STATIC,7,3,114,70
+    CONTROL         "INT3断点",IDC_INT3,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,16,18,47,10
+    CONTROL         "硬件断点",IDC_HARD,"Button",BS_AUTORADIOBUTTON,16,38,46,
+                    10
+    CONTROL         "内存断点",IDC_MEMORY,"Button",BS_AUTORADIOBUTTON,16,58,
+                    46,10
+    EDITTEXT        IDC_ADDRESS,35,88,74,16,ES_AUTOHSCROLL
+    LTEXT           "地址:",IDC_STATIC,10,91,21,8
+    EDITTEXT        IDC_LENGTH,35,112,74,16,ES_AUTOHSCROLL
+    LTEXT           "长度:",IDC_STATIC,10,115,21,8
+    PUSHBUTTON      "确定",BTN_OK,150,92,66,27
+    PUSHBUTTON      "取消",BTN_CANCLE,151,129,66,27
+    GROUPBOX        "断点属性",IDC_STATIC,7,78,121,91
+    LTEXT           "类型:",IDC_STATIC,10,142,22,13
+    EDITTEXT        IDC_ATTRIBUTE,34,139,74,16,ES_AUTOHSCROLL
+    GROUPBOX        "断点类型说明",IDC_STATIC,138,7,119,73
+    LTEXT           "对于硬件断点类型: 0 表示执行断点. 1 表示写入断点. 3 表示访问断点.\r\r对于内存断点类型: 1 表示写入断点. 3 表示访问断点",
+                    IDC_STATIC,145,23,102,49
+END
+
+IDD_DIALOG2 DIALOG DISCARDABLE  0, 0, 439, 199
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_CAPTION | WS_SYSMENU
+CAPTION "当前断点"
+FONT 10, "宋体"
+BEGIN
+    CONTROL         "List1",IDC_BPLIST,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | WS_BORDER | WS_TABSTOP,7,7,329,185
+    PUSHBUTTON      "查看INT3断点",BTN_INT3,348,27,68,21
+    PUSHBUTTON      "硬件断点",BTN_HARD,348,70,68,21
+    PUSHBUTTON      "内存断点",BTN_MEMORY,349,117,68,21
+    GROUPBOX        "选择功能",IDC_STATIC,341,3,91,159
+END
+
+IDD_DIALOG3 DIALOGEX 0, 0, 323, 413
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_ACCEPTFILES
+CAPTION 
+"PE查看工具(支持拖拽)-----不要拖快捷方式 .默认显示的是被调试程序的PE信息"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    LTEXT           "文件:",IDC_STATIC,12,9,20,9
+    EDITTEXT        IDC_FILEPATH,37,7,206,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "选择文件",BTN_SELECT,250,7,60,14
+    GROUPBOX        "基本信息",IDC_STATIC,9,33,302,169
+    GROUPBOX        "目录信息",IDC_STATIC,8,313,303,80
+    LTEXT           "  入口点:",IDC_STATIC,13,48,40,11
+    EDITTEXT        IDC_ENTRY,56,44,56,18,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "镜像基址:",IDC_STATIC,12,71,42,11
+    EDITTEXT        IDC_IMAGE,56,67,56,18,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "镜像大小:",IDC_STATIC,11,92,37,11
+    EDITTEXT        IDC_IMAGESIZE,56,90,56,18,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "代码基址:",IDC_STATIC,10,116,37,11
+    EDITTEXT        IDC_CODEBASE,56,113,56,18,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "数据基址:",IDC_STATIC,10,140,37,11
+    EDITTEXT        IDC_DATABASE,56,137,56,18,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           " 节对齐:",IDC_STATIC,11,163,37,11
+    EDITTEXT        IDC_SECTIONALIGNMENT,55,160,56,18,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "文件对齐:",IDC_STATIC,10,184,37,11
+    EDITTEXT        IDC_FILEALIGNMENT,55,180,56,18,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "  子系统:",IDC_STATIC,203,45,40,11
+    EDITTEXT        IDC_SUBSYSTEM,249,41,56,18,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "  节数目:",IDC_STATIC,203,72,40,11
+    EDITTEXT        IDC_SECTIONNUM,249,68,56,18,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "  头大小:",IDC_STATIC,203,99,40,11
+    EDITTEXT        IDC_SIZEOFHEADER,249,95,56,18,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "  校验和:",IDC_STATIC,204,125,40,11
+    EDITTEXT        IDC_CHECKSUM,249,120,56,18,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "选项头大小:",IDC_STATIC,195,153,49,11
+    EDITTEXT        IDC_OPTION,249,148,56,18,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "导出表:",IDC_STATIC,17,339,36,13
+    EDITTEXT        IDC_EXPORTRVA,63,336,66,16,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EXPORTSIZE,144,336,69,16,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "   RVA",IDC_STATIC,70,320,40,12
+    LTEXT           "   大小",IDC_STATIC,153,322,37,10
+    LTEXT           "导入表:",IDC_STATIC,18,368,36,13
+    EDITTEXT        IDC_IMPORTRVA,64,365,66,16,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_IMPORTSIZE,145,365,69,16,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    PUSHBUTTON      "查看",BTN_EXPORT,229,336,50,14
+    PUSHBUTTON      "查看",BTN_IMPORT,230,365,50,14
+    GROUPBOX        "节信息",IDC_STATIC,7,204,303,106
+    CONTROL         "List1",IDC_LIST1,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | WS_BORDER | WS_TABSTOP,12,214,291,92
+END
+
+IDD_DIALOG4 DIALOG DISCARDABLE  0, 0, 431, 245
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "导入表查看"
+FONT 9, "宋体"
+BEGIN
+    CONTROL         "List1",IDC_DLL,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | WS_BORDER | WS_TABSTOP,7,7,417,104
+    CONTROL         "List1",IDC_FUN,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | WS_BORDER | WS_TABSTOP,6,120,417,109
+END
+
+IDD_DIALOG5 DIALOG DISCARDABLE  0, 0, 388, 249
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_CAPTION | WS_SYSMENU
+CAPTION "导出表查看"
+FONT 9, "宋体"
+BEGIN
+    GROUPBOX        "基本信息",IDC_STATIC,7,7,374,125
+    LTEXT           " 名称：",IDC_STATIC,12,84,31,12
+    EDITTEXT        IDC_NAMERVA,43,80,81,17,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_NAME,139,81,78,17,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           " 基址:",IDC_STATIC,11,109,24,12
+    EDITTEXT        IDC_BASE,43,105,81,17,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           " 函数个数:",IDC_STATIC,243,21,50,12
+    EDITTEXT        IDC_NumberOfFunctions,297,18,81,17,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           " 名称个数:",IDC_STATIC,243,42,50,12
+    EDITTEXT        IDC_NumberOfNames,297,40,81,17,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           " 函数地址:",IDC_STATIC,242,65,50,12
+    EDITTEXT        IDC_AddressOfFunctions,297,63,81,17,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           " 名称地址:",IDC_STATIC,241,90,50,12
+    EDITTEXT        IDC_AddressOfNames,296,87,81,17,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           " 序数地址:",IDC_STATIC,240,113,50,12
+    EDITTEXT        IDC_AddressOfNameOrdinals,296,110,81,17,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "   特征值：",IDC_STATIC,9,21,62,12
+    EDITTEXT        IDC_Characteristics,77,17,81,17,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "时间日期标志：",IDC_STATIC,14,49,56,12
+    EDITTEXT        IDC_TimeDateStamp,76,45,81,17,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    CONTROL         "List1",IDC_LIST1,"SysListView32",LVS_REPORT | WS_BORDER | 
+                    WS_TABSTOP,7,139,374,94
+END
+
+IDD_DIALOG6 DIALOG DISCARDABLE  0, 0, 429, 391
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "使用帮助"
+FONT 9, "宋体"
+BEGIN
+    GROUPBOX        "用法",IDC_STATIC,7,7,415,377
+    LTEXT           "BP   地址  // 设置INT3断点---->BP 0x00405000\rBC   地址  //删除INT3断点 -----> BP 0x00405000\r\rBH   地址    类型  长度   //设置硬件断点其中断点类型 0:执行断点 1:写入断点 3:访问断点\rBHC  地址     //删除硬件断点\r\rBM   地址    类型    长度    //设置内存断点 其中类型:1:写入断点 3:访问断点\r\rBMC  地址 //删除内存断点\r\rBL   显示当前所有类型的断点\r",
+                    IDC_STATIC,17,60,387,93,SS_SUNKEN
+    LTEXT           "支持拖拽,所有的功能都可以是使用命令或菜单来完成,看自己的喜好了.需要注意的是,对命令的处理没有太严密,所以请按下面给定的使用方法来使用命令.如 BP 0x00405000  和 BPXXXXX 0x00405000都可以对此地址下断点.因为我只判断了前两个BP.对用户的输入我仅去掉了前后的空格.所以使用命令时要按下面的标准输入.命令的话大小写均可.",
+                    IDC_STATIC,17,19,388,31
+    LTEXT           "T  单步步入\r\rP  单步步过\r\rU  地址  //反汇编地址处的指令.如没有地址则默认从当前EIP开始递增\r\rG  地址   //执行到地址处,如不加地址则运行程序\r\rS  //自动步过\r\rO   //跳出函数体这个仅适用于mov ebp,esp到pop ebp之间的代码跳出函数体.其他情况不要用,否则会崩溃.\r\rF8   //单步步过\r\rF7  //单步步入\r\rF6    //自动步过\r\rF5   //自动步入\r\rF9   //运行",
+                    IDC_STATIC,14,173,394,172
+    LTEXT           "双击反汇编代码视图的某一行会在此地址处添加INT3断点 同时右键菜单也可以完成硬件执行断点的添加和执行到此地址处的功能.",
+                    IDC_STATIC,14,356,399,20
+    LTEXT           "uf   函数名  //对DLL导出函数反汇编. 所有地址的输入,都以16进制处理.",
+                    IDC_STATIC,15,159,379,14
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "Email:evilkis@163.com\0"
+            VALUE "FileDescription", "just debug it !\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "EasyDbg\0"
+            VALUE "LegalCopyright", "版权所有 (C) 2011\0"
+            VALUE "LegalTrademarks", "evilkis@163.com\0"
+            VALUE "OriginalFilename", "EasyDbg.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "EasyDbg 应用程序\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 58
+    END
+
+    IDD_EASYDBG_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 5
+        RIGHTMARGIN, 661
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 464
+    END
+
+    IDD_VIRTUALMEMORY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 372
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 235
+    END
+
+    IDD_DIALOG1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 372
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 258
+    END
+
+    IDD_BPSETING, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 267
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 173
+    END
+
+    IDD_DIALOG2, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 432
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 192
+    END
+
+    IDD_DIALOG3, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 316
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 406
+    END
+
+    IDD_DIALOG4, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 424
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 238
+    END
+
+    IDD_DIALOG5, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 381
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 242
+    END
+
+    IDD_DIALOG6, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 422
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 384
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU1 MENU DISCARDABLE 
+BEGIN
+    POPUP "文件"
+    BEGIN
+        MENUITEM "打开   ",                     IDM_OPEN
+        MENUITEM "退出     ",                   IDM_QUIT
+    END
+    MENUITEM "",                            65535
+    POPUP "附加功能"
+    BEGIN
+        MENUITEM "内存",                        IDM_MEMORY
+        MENUITEM "模块",                        IDM_MODULE
+        MENUITEM "查看断点",                    IDM_BREAKPOINT
+        MENUITEM "PE查看工具",                  IDM_VIEWPE
+    END
+    POPUP "调试"
+    BEGIN
+        MENUITEM "运行(F9)",                    IDM_RUN
+        MENUITEM "单步步入(F7)",                IDM_STEPINTO
+        MENUITEM "单步步过(F8)",                IDM_STEPOVER
+        MENUITEM "自动步过(F6)",                IDM_AUTOSTEPOUT
+        MENUITEM "设置断点",                    IDM_SETBP
+        MENUITEM "自动步入(F5)",                IDM_AUTOSTEPINTO
+        MENUITEM "跳出函数(有局限性)",          IDM_OUTFUN
+        MENUITEM "Dump被调试进程",              IDM_DUMP
+    END
+    POPUP "帮助"
+    BEGIN
+        MENUITEM "查看帮助",                    IDM_HELP
+    END
+END
+
+CG_IDR_POPUP_EASY_DBG_DLG MENU DISCARDABLE 
+BEGIN
+    POPUP "_POPUP_"
+    BEGIN
+        MENUITEM "INT3断点",                    IDM_INT3
+        MENUITEM "硬件执行断点",                IDM_HARD
+        MENUITEM "运行到当前地址",              IDM_EXECUTE
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "关于 EasyDbg(&A)..."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_OPEN                "打开可执行文件"
+    IDM_ATTACH              "附加到一个正在执行的进程"
+    IDM_QUIT                "退出调试"
+    IDM_STOP                "停止调试程序"
+    IDM_MEMORY              "查看被调试进程内存"
+    IDM_MODULE              "查看被调试进程模块"
+    IDM_THREAD              "查看被调试程序线程"
+    IDM_BREAKPOINT          "查看当前INT3断点"
+    IDM_SOURCEFILE          "查看与被调试程序相关的源文件"
+    IDM_RUN                 "运行程序,遇到断点会停下来"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_HELP                "查看帮助"
+    IDM_PEINFO              "查看被调试程序的PE信息"
+    IDM_VIEWPE              "查看其他软件的PE信息"
+    IDM_INT3                "设置INT3断点"
+    IDM_SETBP               "设置断点"
+    IDM_MEMORYBP            "设置内存断点"
+    IDM_OUTFUN              "跳出函数"
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\EasyDbg.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
