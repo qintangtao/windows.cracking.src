@@ -1,0 +1,55 @@
+ test
+
+ Timestamp is 51fb0dc8 (Fri Aug 02 09:39:20 2013)
+
+ Preferred load address is 00010000
+
+ Start         Length     Name                   Class
+ 0001:00000000 0000024aH .text                   CODE
+ 0002:00000000 0000001cH .idata$5                DATA
+ 0002:00000020 000000a5H .rdata                  DATA
+ 0002:000000c8 0000003fH .rdata$debug            DATA
+ 0003:00000000 00000004H .bss                    DATA
+ 0004:00000000 00000014H .idata$2                CODE
+ 0004:00000014 00000014H .idata$3                CODE
+ 0004:00000028 0000001cH .idata$4                CODE
+ 0004:00000044 00000096H .idata$6                CODE
+
+  Address         Publics by Value              Rva+Base       Lib:Object
+
+ 0000:00000000       ___safe_se_handler_table   00000000     <absolute>
+ 0000:00000000       ___safe_se_handler_count   00000000     <absolute>
+ 0001:00000000       _ProtectProcess@8          00011000 f   Driver.obj
+ 0001:000000a0       _MyNtOpenProcess@16        000110a0 f   Driver.obj
+ 0001:00000100       _PageProtectOff@0          00011100 f   Driver.obj
+ 0001:00000110       _PageProtectOn@0           00011110 f   Driver.obj
+ 0001:00000120       _UnHookSsdt@0              00011120 f   Driver.obj
+ 0001:00000150       _ssdt_hook@0               00011150 f   Driver.obj
+ 0001:00000190       _DriverUnload@4            00011190 f   Driver.obj
+ 0001:000001d0       _DriverEntry@8             000111d0 f   Driver.obj
+ 0001:0000022c       @ObfDereferenceObject@4    0001122c f   ntoskrnl:ntoskrnl.exe
+ 0001:00000232       _DbgPrint                  00011232 f   ntoskrnl:ntoskrnl.exe
+ 0001:00000238       _PsLookupProcessByProcessId@8 00011238 f   ntoskrnl:ntoskrnl.exe
+ 0001:0000023e       _MmIsAddressValid@4        0001123e f   ntoskrnl:ntoskrnl.exe
+ 0001:00000244       _IoGetCurrentProcess@0     00011244 f   ntoskrnl:ntoskrnl.exe
+ 0002:00000000       __imp__DbgPrint            00012000     ntoskrnl:ntoskrnl.exe
+ 0002:00000004       __imp__PsLookupProcessByProcessId@8 00012004     ntoskrnl:ntoskrnl.exe
+ 0002:00000008       __imp__MmIsAddressValid@4  00012008     ntoskrnl:ntoskrnl.exe
+ 0002:0000000c       __imp__IoGetCurrentProcess@0 0001200c     ntoskrnl:ntoskrnl.exe
+ 0002:00000010       __imp__KeServiceDescriptorTable 00012010     ntoskrnl:ntoskrnl.exe
+ 0002:00000010       _KeServiceDescriptorTable  00012010     ntoskrnl:ntoskrnl.exe
+ 0002:00000014       __imp_@ObfDereferenceObject@4 00012014     ntoskrnl:ntoskrnl.exe
+ 0002:00000018       \177ntoskrnl_NULL_THUNK_DATA 00012018     ntoskrnl:ntoskrnl.exe
+ 0002:0000003c       ??_C@_0CK@LNPGBIKC@?N?R?$LE?m?A?K?$KD?$KM?U?b?$LI?v?J?G?$LE?m?N?s?$LK?E?3?$CFX?9?9?9?U?b?$LI?v?J?G@ 0001203c     Driver.obj
+ 0002:00000068       ??_C@_0BP@OAIBINLE@?$CFs?O?k?$LE?r?$LP?$KK?N?R?B?p?$KD?$LP?$LC?$LL?$LP?I?D?$NM?$KB?$KD?$LJ?$PO?$LJ?$PO?$KB?$KD?$KB?$KD?$AA@ 00012068     Driver.obj
+ 0002:00000088       ??_C@_08JCEOJNCO@calc?4exe?$AA@ 00012088     Driver.obj
+ 0002:00000094       ??_C@_0BI@LMLMNHPG@Driver?5Unload?5Success?5?$CB?$AA@ 00012094     Driver.obj
+ 0002:000000ac       ??_C@_0BJ@PDCBDPDO@This?5is?5My?5First?5Driver?$CB?$AA@ 000120ac     Driver.obj
+ 0003:00000000       _O_NtOpenProcess           00013000     <common>
+ 0004:00000000       __IMPORT_DESCRIPTOR_ntoskrnl 00014000     ntoskrnl:ntoskrnl.exe
+ 0004:00000014       __NULL_IMPORT_DESCRIPTOR   00014014     ntoskrnl:ntoskrnl.exe
+
+ entry point at        0000:00000000
+
+ Static symbols
+

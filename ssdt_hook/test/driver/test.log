@@ -1,0 +1,20 @@
+﻿生成启动时间为 2013/8/2 9:39:19。
+     1>项目“D:\MyDrivers\ssdt_hook\test\test.vcxproj”在节点 2 上(rebuild 个目标)。
+     1>_PrepareForClean:
+         正在删除文件“driver\test.lastbuildstate”。
+       InitializeBuildStatus:
+         正在创建“driver\test.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Z7 /nologo /W2 /WX /O2 /Oy- /D WIN32=100 /D _X86_=1 /D WINVER=0x501 /D DBG=1 /Gm- /EHsc /MTd /GS- /fp:precise /Zc:wchar_t /Zc:forScope /Fo"driver\\" /Fd"driver\vc100.pdb" /Gz /TC /analyze- /errorReport:prompt Driver.c
+         Driver.c
+       Link:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\MyDrivers\ssdt_hook\driver\test.sys" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\WinDDK\7600.16385.1\lib\win7\i386 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ntoskrnl.lib Hal.lib wdm.lib wdmsec.lib wmilib.lib ndis.lib MSVCRT.LIB LIBCMT.LIB kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB /MANIFEST:NO /DEBUG /PDB:"D:\MyDrivers\ssdt_hook\driver\test.pdb" /MAP:"D:\MyDrivers\ssdt_hook\driver\test.map" /SUBSYSTEM:CONSOLE /Driver /TLBID:1 /ENTRY:"DriverEntry" /RELEASE /BASE:"0x10000" /MACHINE:X86 driver\Driver.obj
+         test.vcxproj -> D:\MyDrivers\ssdt_hook\driver\test.sys
+       FinalizeBuildStatus:
+         正在删除文件“driver\test.unsuccessfulbuild”。
+         正在对“driver\test.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“D:\MyDrivers\ssdt_hook\test\test.vcxproj”(rebuild 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.34
