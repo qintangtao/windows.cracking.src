@@ -1,0 +1,5 @@
+1、把include里的所有文件拷贝到soure文件夹中
+2、从lib文件夹中拷贝ms32doit.bat文件到source文件夹中
+3、从电脑开始菜单中找到"Visual Studio 2008 命令提示"，并运行
+4、进入到soure文件夹中
+5、运行ms32doit.bat即可
