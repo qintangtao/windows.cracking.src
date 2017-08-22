@@ -1,0 +1,662 @@
+//--------------------------------------
+//--- 010 Editor v3.1.3 Binary Template
+//
+// File:
+// Author:
+// Revision:
+// Purpose:
+//--------------------------------------
+//configure
+local byte bShow_DexTypeList = 0;
+ 
+//enum
+enum { kSHA1DigestLen = 20,
+       kSHA1DigestOutputLen = kSHA1DigestLen*2 +1 };
+/*
+ * access flags and masks; the "standard" ones are all <= 0x4000
+ *
+ * Note: There are related declarations in vm/oo/Object.h in the ClassFlags
+ * enum.
+ */
+enum <uint> AccessFlags{
+    ACC_PUBLIC       = 0x00000001,       // class, field, method, ic
+    ACC_PRIVATE      = 0x00000002,       // field, method, ic
+    ACC_PROTECTED    = 0x00000004,       // field, method, ic
+    ACC_STATIC       = 0x00000008,       // field, method, ic
+    ACC_FINAL        = 0x00000010,       // class, field, method, ic
+    ACC_SYNCHRONIZED = 0x00000020,       // method (only allowed on natives)
+    ACC_SUPER        = 0x00000020,       // class (not used in Dalvik)
+    ACC_VOLATILE     = 0x00000040,       // field
+    ACC_BRIDGE       = 0x00000040,       // method (1.5)
+    ACC_TRANSIENT    = 0x00000080,       // field
+    ACC_VARARGS      = 0x00000080,       // method (1.5)
+    ACC_NATIVE       = 0x00000100,       // method
+    ACC_INTERFACE    = 0x00000200,       // class, ic
+    ACC_ABSTRACT     = 0x00000400,       // class, method, ic
+    ACC_STRICT       = 0x00000800,       // method
+    ACC_SYNTHETIC    = 0x00001000,       // field, method, ic
+    ACC_ANNOTATION   = 0x00002000,       // class, ic (1.5)
+    ACC_ENUM         = 0x00004000,       // class, field, ic (1.5)
+    ACC_CONSTRUCTOR  = 0x00010000,       // method (Dalvik only)
+    ACC_DECLARED_SYNCHRONIZED =
+                       0x00020000,       // method (Dalvik only)
+    ACC_CLASS_MASK =
+        (ACC_PUBLIC | ACC_FINAL | ACC_INTERFACE | ACC_ABSTRACT
+                | ACC_SYNTHETIC | ACC_ANNOTATION | ACC_ENUM),
+    ACC_INNER_CLASS_MASK =
+        (ACC_CLASS_MASK | ACC_PRIVATE | ACC_PROTECTED | ACC_STATIC),
+    ACC_FIELD_MASK =
+        (ACC_PUBLIC | ACC_PRIVATE | ACC_PROTECTED | ACC_STATIC | ACC_FINAL
+                | ACC_VOLATILE | ACC_TRANSIENT | ACC_SYNTHETIC | ACC_ENUM),
+    ACC_METHOD_MASK =
+        (ACC_PUBLIC | ACC_PRIVATE | ACC_PROTECTED | ACC_STATIC | ACC_FINAL
+                | ACC_SYNCHRONIZED | ACC_BRIDGE | ACC_VARARGS | ACC_NATIVE
+                | ACC_ABSTRACT | ACC_STRICT | ACC_SYNTHETIC | ACC_CONSTRUCTOR
+                | ACC_DECLARED_SYNCHRONIZED),
+};
+ 
+//Dex Header
+struct DexHeader {
+    unsigned char  magic[8];           /* includes version number */
+    unsigned int   checksum;           /* adler32 checksum */
+    unsigned char  signature[kSHA1DigestLen]; /* SHA-1 hash */
+    unsigned int   fileSize;           /* length of entire file */
+    unsigned int   headerSize;         /* offset to start of next section */
+    unsigned int   endianTag;
+    unsigned int   linkSize;
+    unsigned int   linkOff;
+    unsigned int   mapOff;
+    unsigned int   stringIdsSize;
+    unsigned int   stringIdsOff;
+    unsigned int   typeIdsSize;
+    unsigned int   typeIdsOff;
+    unsigned int   protoIdsSize;
+    unsigned int   protoIdsOff;
+    unsigned int   fieldIdsSize;
+    unsigned int   fieldIdsOff;
+    unsigned int   methodIdsSize;
+    unsigned int   methodIdsOff;
+    unsigned int   classDefsSize;
+    unsigned int   classDefsOff;
+    unsigned int   dataSize;
+    unsigned int   dataOff;
+};
+ 
+//******************** map list*******************
+ 
+/* map item type codes, DexMapItem.type used*/
+//DexHeader.mapOff  ---> pointer to data struct
+enum <ushort> kDexType{
+    kDexTypeHeaderItem               = 0x0000,
+    kDexTypeStringIdItem             = 0x0001,
+    kDexTypeTypeIdItem               = 0x0002,
+    kDexTypeProtoIdItem              = 0x0003,
+    kDexTypeFieldIdItem              = 0x0004,
+    kDexTypeMethodIdItem             = 0x0005,
+    kDexTypeClassDefItem             = 0x0006,
+    kDexTypeMapList                  = 0x1000,
+    kDexTypeTypeList                 = 0x1001,
+    kDexTypeAnnotationSetRefList     = 0x1002,
+    kDexTypeAnnotationSetItem        = 0x1003,
+    kDexTypeClassDataItem            = 0x2000,
+    kDexTypeCodeItem                 = 0x2001,
+    kDexTypeStringDataItem           = 0x2002,
+    kDexTypeDebugInfoItem            = 0x2003,
+    kDexTypeAnnotationItem           = 0x2004,
+    kDexTypeEncodedArrayItem         = 0x2005,
+    kDexTypeAnnotationsDirectoryItem = 0x2006,
+};
+ 
+struct DexMapItem {
+    kDexType type;              /* type code (see kDexType* above) */
+    ushort  unused;
+    uint    size<format=decimal>;              /* count of items of the indicated type */
+    uint    offset;            /* file offset to the start of data */
+};
+ 
+struct DexMapList
+{
+    uint size<format=decimal>;               /* #of entries in list */   
+    //ref field DexMapList.size
+    DexMapItem list[size];   /* entries */
+};
+ 
+//********************strings index table********************
+/*
+ * Direct-mapped "string_id_item".
+ */
+typedef struct
+{
+    uint stringDataOff;      /* file offset to string_data_item */
+}DexStringId<read=TemplateRead_StringId>;
+ 
+//********************types index table********************
+/*
+ * Direct-mapped "type_id_item".
+ */
+typedef struct
+{
+    uint  descriptorIdx;      /* index into stringIds list for type descriptor */
+}DexTypeId<read=TemplateRead_TypeId>;
+ 
+//********************protos index table********************
+ 
+/*
+ * Direct-mapped "type_item".
+ */
+struct DexTypeItem {
+    ushort  typeIdx;            /* index into typeIds */
+};
+ 
+/*
+ * Direct-mapped "type_list".
+ */
+typedef struct  {
+    uint  size;               /* #of entries in list */
+    DexTypeItem list[size];    /* entries */
+}DexTypeList<read=TemplateRead_TypeList>;
+ 
+/*
+ * Direct-mapped "proto_id_item".
+ */
+typedef struct 
+{
+    uint  shortyIdx;          /* index into stringIds for shorty descriptor */
+    uint  returnTypeIdx;      /* index into typeIds list for return type */
+    uint  parametersOff;      /* file offset to type_list for parameter types */ 
+    if(parametersOff > 0x70)
+    {
+        local int64 oldOffset = FTell(); 
+        FSeek(parametersOff);   
+        DexTypeList typeList_Params;
+        FSeek(oldOffset); 
+    }        
+}DexProtoId<read=TemplateRead_ProtoId>;
+ 
+ 
+//********************field index table********************
+/*
+ * Direct-mapped "field_id_item".
+ */
+typedef struct  {
+    ushort  classIdx;           /* index into typeIds list for defining class */
+    ushort  typeIdx;            /* index into typeIds for field type */
+    uint  nameIdx;            /* index into stringIds for field name */
+}DexFieldId<read=TemplateRead_FieldId>;
+ 
+//********************method index table********************
+/*
+ * Direct-mapped "method_id_item".
+ */
+typedef struct  {
+    ushort  classIdx;           /* index into typeIds list for defining class */
+    ushort  protoIdx;           /* index into protoIds for method prototype */
+    uint  nameIdx;            /* index into stringIds for method name */
+}DexMethodId<read=TemplateRead_MethodId>;
+ 
+//********************Class Define table********************
+ 
+/* expanded form of a class_data_item header */
+struct DexClassDataHeader {
+    local int64 oldOffset = FTell();
+    local int64 currOffset = oldOffset; 
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x\n",currOffset);  
+    local int len = readUnsignedLeb128(currOffset);
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x,",currOffset);
+    //Printf("field size:%x,",currOffset - oldOffset);
+    //Printf("size:%x\n",len);
+    switch(currOffset - oldOffset)
+    {
+        case 1: ubyte staticFieldsSize<comment="uleb128 staticFieldsSize">; break;
+        case 2: ushort staticFieldsSize<comment="uleb128 staticFieldsSize">; break;
+        case 3: ubyte staticFieldsSize[3]<comment="uleb128 staticFieldsSize">; break;
+        case 4: uint staticFieldsSize<comment="uleb128 staticFieldsSize">; break;
+        case 5: ubyte staticFieldsSize[5]<comment="uleb128 staticFieldsSize">; break;
+    }   
+     
+    oldOffset = FTell();
+    currOffset = oldOffset;
+    //Printf("*******************************\n");
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x\n",currOffset);  
+    len = readUnsignedLeb128(currOffset);
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x,",currOffset);
+    //Printf("field size:%x,",currOffset - oldOffset);
+    //Printf("size:%x\n",len);
+    switch(currOffset - oldOffset)
+    {
+        case 1: ubyte instanceFieldsSize<comment="uleb128 instanceFieldsSize">; break;
+        case 2: ushort instanceFieldsSize<comment="uleb128 instanceFieldsSize">; break;
+        case 3: ubyte instanceFieldsSize[3]<comment="uleb128 instanceFieldsSize">; break;
+        case 4: uint instanceFieldsSize<comment="uleb128 instanceFieldsSize">; break;
+        case 5: ubyte instanceFieldsSize[5]<comment="uleb128 instanceFieldsSize">; break;
+    }       
+ 
+ 
+    oldOffset = FTell();
+    currOffset = oldOffset;
+    //Printf("*******************************\n");
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x\n",currOffset);  
+    len = readUnsignedLeb128(currOffset);
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x,",currOffset);
+    //Printf("field size:%x,",currOffset - oldOffset);
+    //Printf("size:%x\n",len);
+    switch(currOffset - oldOffset)
+    {
+        case 1: ubyte directMethodsSize<comment="uleb128 directMethodsSize">; break;
+        case 2: ushort directMethodsSize<comment="uleb128 directMethodsSize">; break;
+        case 3: ubyte directMethodsSize[3]<comment="uleb128 directMethodsSize">; break;
+        case 4: uint directMethodsSize<comment="uleb128 directMethodsSize">; break;
+        case 5: ubyte directMethodsSize[5]<comment="uleb128 directMethodsSize">; break;
+    }       
+     
+    oldOffset = FTell();
+    currOffset = oldOffset;
+    //Printf("*******************************\n");
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x\n",currOffset);  
+    len = readUnsignedLeb128(currOffset);
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x,",currOffset);
+    //Printf("field size:%x,",currOffset - oldOffset);
+    //Printf("size:%x\n",len);
+    switch(currOffset - oldOffset)
+    {
+        case 1: ubyte virtualMethodsSize<comment="uleb128 virtualMethodsSize">; break;
+        case 2: ushort virtualMethodsSize<comment="uleb128 virtualMethodsSize">; break;
+        case 3: ubyte virtualMethodsSize[3]<comment="uleb128 virtualMethodsSize">; break;
+        case 4: uint virtualMethodsSize<comment="uleb128 virtualMethodsSize">; break;
+        case 5: ubyte virtualMethodsSize[5]<comment="uleb128 virtualMethodsSize">; break;
+    }           
+};
+ 
+/* expanded form of encoded_field */
+struct DexField {
+    uint fieldIdx;    /* index to a field_id_item */
+    uint accessFlags;
+};
+ 
+/* expanded form of encoded_method */
+struct DexMethod {
+    uint methodIdx;    /* index to a method_id_item */
+    uint accessFlags;
+    uint codeOff;      /* file offset to a code_item */
+};
+ 
+/* expanded form of class_data_item. Note: If a particular item is
+ * absent (e.g., no static fields), then the corresponding pointer
+ * is set to NULL. */
+struct DexClassData {
+    DexClassDataHeader header;
+ 
+    local int64 oldOffset = FTell();
+    local int64 currOffset = oldOffset; 
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x\n",currOffset);  
+    local int len = readUnsignedLeb128(currOffset);
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x,",currOffset);
+    //Printf("field size:%x,",currOffset - oldOffset);
+    //Printf("size:%x\n",len);
+    switch(currOffset - oldOffset)
+    {
+        case 1: ubyte staticFields<comment="uleb128 staticFields">; break;
+        case 2: ushort staticFields<comment="uleb128 staticFields">; break;
+        case 3: ubyte staticFields[3]<comment="uleb128 staticFields">; break;
+        case 4: uint staticFields<comment="uleb128 staticFields">; break;
+        case 5: ubyte staticFields[5]<comment="uleb128 staticFields">; break;
+    }
+ 
+    oldOffset = FTell();
+    currOffset = oldOffset; 
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x\n",currOffset);  
+    len = readUnsignedLeb128(currOffset);
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x,",currOffset);
+    //Printf("field size:%x,",currOffset - oldOffset);
+    //Printf("size:%x\n",len);
+    switch(currOffset - oldOffset)
+    {
+        case 1: ubyte instanceFields<comment="uleb128 instanceFields">; break;
+        case 2: ushort instanceFields<comment="uleb128 instanceFields">; break;
+        case 3: ubyte instanceFields[3]<comment="uleb128 instanceFields">; break;
+        case 4: uint instanceFields<comment="uleb128 instanceFields">; break;
+        case 5: ubyte instanceFields[5]<comment="uleb128 instanceFields">; break;
+    }
+ 
+    oldOffset = FTell();
+    currOffset = oldOffset; 
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x\n",currOffset);  
+    len = readUnsignedLeb128(currOffset);
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x,",currOffset);
+    //Printf("field size:%x,",currOffset - oldOffset);
+    //Printf("size:%x\n",len);
+    switch(currOffset - oldOffset)
+    {
+        case 1: ubyte directMethods<comment="uleb128 directMethods">; break;
+        case 2: ushort directMethods<comment="uleb128 directMethods">; break;
+        case 3: ubyte directMethods[3]<comment="uleb128 directMethods">; break;
+        case 4: uint directMethods<comment="uleb128 directMethods">; break;
+        case 5: ubyte directMethods[5]<comment="uleb128 directMethods">; break;
+    }
+     
+    oldOffset = FTell();
+    currOffset = oldOffset; 
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x\n",currOffset);  
+    len = readUnsignedLeb128(currOffset);
+    //Printf("oldOffset=%x,",oldOffset);
+    //Printf("currOffset=%x,",currOffset);
+    //Printf("field size:%x,",currOffset - oldOffset);
+    //Printf("size:%x\n",len);
+    switch(currOffset - oldOffset)
+    {
+        case 1: ubyte virtualMethods<comment="uleb128 virtualMethods">; break;
+        case 2: ushort virtualMethods<comment="uleb128 virtualMethods">; break;
+        case 3: ubyte virtualMethods[3]<comment="uleb128 virtualMethods">; break;
+        case 4: uint virtualMethods<comment="uleb128 virtualMethods">; break;
+        case 5: ubyte virtualMethods[5]<comment="uleb128 virtualMethods">; break;
+    }   
+    //DexField*          staticFields;  
+    //DexField*          instanceFields;
+    //DexMethod*         directMethods;
+    //DexMethod*         virtualMethods;
+};
+ 
+/*
+ * Direct-mapped "class_def_item".
+ */
+typedef struct  {
+    uint  classIdx;           /* index into typeIds for this class */
+    AccessFlags  accessFlags;
+    uint  superclassIdx;      /* index into typeIds for superclass */
+    uint  interfacesOff;      /* file offset to DexTypeList */
+    if(interfacesOff > 0 && interfacesOff != 0xFFFFFFFF)
+    {
+        local int64 oldOffset = FTell(); 
+        FSeek(interfacesOff);   
+        DexTypeList typeList_Interfaces;
+        FSeek(oldOffset); 
+    }
+    uint  sourceFileIdx;      /* index into stringIds for source file name */
+    uint  annotationsOff;     /* file offset to annotations_directory_item */
+    uint  classDataOff;       /* file offset to class_data_item */
+    if(classDataOff > 0 && classDataOff != 0xFFFFFFFF)
+    {
+        local int64 oldOff = FTell(); 
+        FSeek(classDataOff);   
+        DexClassData dexClassData;
+        FSeek(oldOff);
+    }
+    uint  staticValuesOff;    /* file offset to DexEncodedArray */
+    if(staticValuesOff > 0)
+    {
+        local int64 offset = FTell(); 
+        FSeek(staticValuesOff);   
+        //
+        FSeek(offset);
+    }
+}DexClassDef<read=TemplateRead_ClassDefs>;
+ 
+/*
+ * Direct-mapped "annotations_directory_item".
+ */
+struct DexAnnotationsDirectoryItem {
+    uint  classAnnotationsOff;  /* offset to DexAnnotationSetItem */
+    uint  fieldsSize;           /* count of DexFieldAnnotationsItem */
+    uint  methodsSize;          /* count of DexMethodAnnotationsItem */
+    uint  parametersSize;       /* count of DexParameterAnnotationsItem */
+    /* followed by DexFieldAnnotationsItem[fieldsSize] */
+    /* followed by DexMethodAnnotationsItem[methodsSize] */
+    /* followed by DexParameterAnnotationsItem[parametersSize] */
+};
+ 
+void Dump_DexHeader(int64 startOffset)
+{   
+    local int64 oldOffset = FTell();
+    FSeek(startOffset);
+    DexHeader dexHdr;
+    FSeek(oldOffset);
+ 
+    Printf("file size: 0x%x\n", dexHdr.fileSize);
+    Printf("file header size: 0x%x\n", dexHdr.headerSize);
+    Printf("strings count: %d\n", dexHdr.stringIdsSize);
+    Printf("types count: %d\n", dexHdr.typeIdsSize);
+    Printf("proto count: %d\n", dexHdr.protoIdsSize);
+    Printf("fields count: %d\n", dexHdr.fieldIdsSize);
+    Printf("methods count: %d\n", dexHdr.methodIdsSize);
+    Printf("classDefs count: %d\n", dexHdr.classDefsSize);
+    Printf("data size count: %d\n", dexHdr.dataSize);
+    Printf("mapOff: 0x%x\n", dexHdr.mapOff);
+}
+ 
+void Dump_MapList(int64 startOffset)
+{
+    local int64 oldOffset = FTell();
+    FSeek(startOffset);
+    DexMapList mapList;
+    FSeek(oldOffset);  
+}
+ 
+ 
+void Dump_StringItems(int64 startOffset)
+{
+    local int64 oldOffset = FTell();
+    FSeek(startOffset);
+    DexStringId dexStringId[dexHdr.stringIdsSize];
+    FSeek(oldOffset);  
+}
+ 
+void Dump_TypeItems(int64 startOffset)
+{
+    local int64 oldOffset = FTell();
+    FSeek(startOffset);
+    DexTypeId dexTypeId[dexHdr.typeIdsSize];
+    FSeek(oldOffset);  
+}
+ 
+void Dump_ProtoItems(int64 startOffset)
+{
+    local int64 oldOffset = FTell();
+    FSeek(startOffset);
+    DexProtoId dexProtoId[dexHdr.protoIdsSize]<optimize=true>;   
+ 
+    FSeek(oldOffset);
+}
+ 
+void Dump_FieldItems(int64 startOffset)
+{
+    local int64 oldOffset = FTell();
+    FSeek(startOffset);  
+    DexFieldId dexFieldId[dexHdr.fieldIdsSize];
+    FSeek(oldOffset);
+}
+ 
+void Dump_MethodItems(int64 startOffset)
+{
+    local int64 oldOffset = FTell();
+    FSeek(startOffset);  
+    DexMethodId dexMethodId[dexHdr.methodIdsSize];
+    FSeek(oldOffset);
+}
+ 
+void Dump_ClassDef(int64 startOffset)
+{
+    local int64 oldOffset = FTell();
+    FSeek(startOffset);  
+    DexClassDef dexClassDef[dexHdr.classDefsSize]<optimize=false>;
+    FSeek(oldOffset);
+}
+ 
+int readUnsignedLeb128(int64 &streamPos)
+{   
+    local int result = ReadUByte(streamPos);// read first byte
+  streamPos++;
+   
+    if (result > 0x7f)
+  {
+        local int cur = ReadUByte(streamPos);   //read second byte
+    streamPos++;
+        result = (result & 0x7f) | ((cur & 0x7f) << 7);
+        if (cur > 0x7f)
+    {
+            cur = ReadUByte(streamPos);     //read third byte
+      streamPos++;
+            result |= (cur & 0x7f) << 14;
+            if (cur > 0x7f)
+      {
+                cur = ReadUByte(streamPos); //read fourth byte
+        streamPos++;
+                result |= (cur & 0x7f) << 21;
+                if (cur > 0x7f)
+        {
+                    /*
+                     * Note: We don't check to see if cur is out of
+                     * range here, meaning we tolerate garbage in the
+                     * high four-order bits.
+                     */
+                    cur = ReadUByte(streamPos); //read fifth byte
+          streamPos++;
+                    result |= cur << 28;
+                }
+            }
+        }
+    }
+     
+    return result;
+}
+ 
+//display checker value
+string TemplateRead_StringId(DexStringId &stringId)
+{   
+    local string str = "";
+    local int64 offset = stringId.stringDataOff;
+    local int strLen = readUnsignedLeb128(offset); //--->>>Warning,only pause one string
+    str = ReadString(offset); 
+     
+    return str;
+}
+ 
+string TemplateRead_TypeId(DexTypeId &typeId )
+{   
+    local string str = "";
+    local int64 offset = dexStringId[typeId.descriptorIdx].stringDataOff;
+    local int strLen = readUnsignedLeb128(offset);
+    str = ReadString(offset);
+    str = TemplateRead_StringId(dexStringId[typeId.descriptorIdx]);
+    return str;
+}
+ 
+string TemplateRead_ProtoId(DexProtoId &protoId )
+{   
+    local int64 oldOffset = FTell();  
+    local string str = "";
+    local int i = 0, count = 0;
+    local short typeIdx = -1;
+     
+    if(protoId.parametersOff > 0)
+    {
+        local string method = TemplateRead_StringId(dexStringId[protoId.shortyIdx]);
+        local string retType = TemplateRead_TypeId(dexTypeId[protoId.returnTypeIdx]);
+        local string params = "";
+ 
+        count = ReadInt(protoId.parametersOff);
+        while(i < count)
+        {
+            typeIdx = ReadShort(protoId.parametersOff + sizeof(int) +
+                            i * sizeof(short));
+            params += TemplateRead_TypeId(dexTypeId[typeIdx]);
+            i++;
+             
+            //function args delimiter
+            //if(i < count)
+                //params += " , ";
+        }      
+         
+        //join: return + method + args
+        SPrintf(str, "<%s%s(%s)>",retType, method, params);
+    }   
+     
+    FSeek(oldOffset);
+    return str;
+}
+ 
+string TemplateRead_FieldId(DexFieldId &fieldId)
+{
+    local string classTypeName = "";
+    local string fieldTypeName = "";
+    local string fieldName = "";
+    local string result = "";
+ 
+    classTypeName = TemplateRead_TypeId(dexTypeId[fieldId.classIdx]);
+    fieldTypeName = TemplateRead_TypeId(dexTypeId[fieldId.typeIdx]);
+    fieldName = TemplateRead_StringId(dexStringId[fieldId.nameIdx]);
+    result = classTypeName + "@" + fieldTypeName + "@" + fieldName;
+ 
+    return result;
+}
+ 
+string TemplateRead_MethodId(DexMethodId &methodId)
+{
+    local string result = "";
+    local string classTypeName = "";
+    local string protoTypeName = "";
+    local string methodName = "";
+     
+    classTypeName = TemplateRead_TypeId(dexTypeId[methodId.classIdx]);
+    protoTypeName = TemplateRead_ProtoId(dexProtoId[methodId.protoIdx]);
+    methodName = TemplateRead_StringId(dexStringId[methodId.nameIdx]);
+    result = classTypeName + "@" + protoTypeName + "@" + methodName;
+ 
+    return result;
+}
+ 
+string TemplateRead_ClassDefs(DexClassDef &classDef)
+{
+    local string result = "";
+    local string classTypeName = "";
+    local string superClassTypeName = "";
+    local string protoTypeName = "";
+    local string methodName = "";
+     
+     
+ 
+    return result;
+}
+ 
+string TemplateRead_TypeList(DexTypeList &typeList)
+{
+    local string result = "", temp = "";
+    //local int i = 0;
+    //local int len = typeList.size;
+    //while(i < len)
+    //{
+        //SPrintf(temp, "%d,", typeList.list[i].typeIdx);
+        //typeList.list[i].typeIdx;
+        //dexTypeId[typeList.list[i].typeIdx];
+        //result += TemplateRead_TypeId(dexTypeId[typeList.list[i].typeIdx]);
+         
+        //SPrintf(temp, "index=%d,", i);
+        //result += temp;
+       // i++;
+    //}
+    //SPrintf(result, "size=%d", typeList.size);
+    return result;
+}
+//-------------------------->>>   start running   <<<--------------------------
+Dump_DexHeader(0);
+Dump_MapList(dexHdr.mapOff);
+Dump_StringItems(dexHdr.stringIdsOff);
+Dump_TypeItems(dexHdr.typeIdsOff);
+Dump_ProtoItems(dexHdr.protoIdsOff);
+Dump_FieldItems(dexHdr.fieldIdsOff);
+Dump_MethodItems(dexHdr.methodIdsOff);
+Dump_ClassDef(dexHdr.classDefsOff);
