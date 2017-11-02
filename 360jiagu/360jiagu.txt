@@ -5,11 +5,32 @@ adb shell am start -D -n com.snow.alldalvikopcode/.MainActivity
 jdb -connect com.sun.jdi.SocketAttach:hostname=127.0.0.1,port=8700
 
 
+GetEnv()   4072B1D0-406F1000=3A1D0
+FindClass() 406F1000+419B4=407329B4
+RegisterNatives()  406F1000+3AAF8=4072BAF8
+
+08248+4A3B9000=4A3C1248
+libjiagu.so 4A3B9000 4A3C6000 R . X D . byte 00 public CODE 32 00 00
 open /proc/self/maps
 strstr /system/bin/linker
 open /system/bin/linker
 mmap /system/bin/linker
 find rtld_db_dlactivity address
+
+find TracerPid
+strtol TracerPid=0
+
+strstr 00000000:5D8A
+
+"FindClass: com/snow/alldalvikopcode/MainActivity"
+"2A12CCA0 : onCreate : (Landroid/os/Bundle;)V : 4A4EDE2D"
+
+//OnLoad
+4A3C1248
+print("EnableBpt open");
+EnableBpt(0x4003F908,1);
+
+
 
 //open
 auto f;
@@ -20,26 +41,115 @@ if(f == "/system/bin/linker")
     if(lr==0x4A3BAE78)
     {
         print("fix rtld_db_dlactivity");
-       // PatchWord(0x40005AC4, 0xC046);
         PatchWord(0x40005AC4, 0xBF00);
+        print("EnableBpt strtol");
+        EnableBpt(0x4004801A,1);
+        EnableBpt(pc,0);
     }
 }
-else if (f == "/proc/self/status")
+
+
+//strtol done
+auto f;
+print("fix /proc/self/status");
+print("fix before: " + ltoa(r0, 10));
+SetRegValue(0, "r0");
+print("fix after: " + ltoa(r0, 10));
+print("EnableBpt strstr");
+EnableBpt(0x40048CF4,1);
+EnableBpt(pc,0);
+
+
+//strstr
+auto f;
+f = GetString(r1,-1,GetStringType(r1));
+print("strstr: " + f);
+if(f == "00000000:5D8A")
 {
-    print("enabled strtol breakpoint");
-    EnableBpt(0x4004801A,1);
+     print("fix /proc/net/tcp");
+     PatchByte(r1+0xc, 0x42); 
+     print("EnableBpt time");  
+     EnableBpt(0x40040890,1);
+     EnableBpt(pc,0);
 }
-else if(f == "/proc/net/tcp")
+
+//time done
+print("fix time");
+print("fix before: " + ltoa(r0, 10));
+SetRegValue(0x59951019, "r0");
+print("fix after: " + ltoa(r0, 10));
+
+
+//FindClass 407329B4
+auto f = GetString(r1,-1,GetStringType(r1));
+print("FindClass: " + f);
+if(-1!=strstr(f, "com/stub/StubApp") || -1!=strstr(f, "com/snow/alldalvikopcode/MainActivity"))
 {
-     print("enabled strstr breakpoint");
-     EnableBpt(0x40048CF4,1);
+     print("EnableBpt RegisterNatives");  
+     EnableBpt(0x4072BAF8,1);
 }
-else if(-1!=strstr(f, "/proc/") && -1==strstr(f, "/self/") && -1!=strstr(f, "/maps"))
+
+//print JNINativeMethod 4072BAF8
+//{ "a1", "(Ljava/lang/String;)J", (void*) GetSFCRC32 }, //
+auto i;
+auto ab;
+auto count;
+count=r3;
+print("RegisterNatives function count: " + ltoa(count,10));
+for(i=0; i < count; i++)
 {
-    print("pre find odex");
-    //EnableBpt(0x4003CF1C,1); //malloc
-    PauseProcess();
+    ab = r2 + i * 3*4;
+    auto fn;
+    auto fp;
+    auto addr;
+    addr = DbgDword(ab);
+    fn = GetString(addr,-1,GetStringType(addr));
+    addr = DbgDword(ab+4);
+    fp = GetString(addr,-1,GetStringType(addr));
+    addr = DbgDword(ab+4+4);
+    print(ltoa(i+1,10) + " : " + ltoa(ab,16) + " : " + fn + " : " + fp + " : " + ltoa(addr,16));
+    if(-1!=strstr(fn, "onCreate"))
+    {
+        print("AddBpt onCreate");
+        AddBpt(addr);
+        PauseProcess();
+    }
 }
+EnableBpt(pc,0);
+
+//dump dex
+debug087 4A43E000 4A499000 R W X D . byte 00 public CODE 32 00 00
+
+dex.onCreate opbyte 4A43E000+4C3FC=4A48A3FC
+
+
+auto i,fp;
+fp = fopen("e:\\debug087.dex", "wb");
+for(i=0x4A43E000;i<0x4A43E000+0x50AF8;i++)
+  fputc(Byte(i), fp);
+
+4A4EDE2D-4A4DD000
+4A4DD000+35CA6=4A512CA6 //opcode
+4A4DD000+35CCC=4A512CCC         //execute table
+
+0x362ac+0x5e0
+
+debug083 4A4DD000 4A550000 R . X D . byte 00 public CODE 32 00 00
+auto i,fp;
+fp = fopen("e:\\debug083.sec", "wb");
+for(i=0x4A4DD000;i<0x4A550000;i++)
+  fputc(Byte(i), fp);
+
+
+a1 = 每次取两个字节 xor 0xD0D0
+a1 = 取a1的最低一个字节
+a1 = a1-1
+a1 = a1 << 2
+a1 = table_addr + a1 = 4A513028
+a1 = [a1]
+a1 = table_addr + a1
+
+static=2A0B5F60
 
 
 
@@ -49,8 +159,6 @@ else if(-1!=strstr(f, "/proc/") && -1==strstr(f, "/self/") && -1!=strstr(f, "/ma
 4A50C3C4  time
 4A50CD10
 
-08248+4A3B9000=4A3C1248
-libjiagu.so 4A3B9000 4A3C6000 R . X D . byte 00 public CODE 32 00 00
 
 debug091 4A989000-4A989000+26E430=4ABF7430
 auto i,fp;
