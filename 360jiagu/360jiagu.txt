@@ -4,15 +4,15 @@ adb shell am start -D -n com.easyread.ebook.s/com.freenovel.activity.SplashActiv
 adb shell am start -D -n com.snow.alldalvikopcode/.MainActivity
 jdb -connect com.sun.jdi.SocketAttach:hostname=127.0.0.1,port=8700
 
-72632
-1BB8
-1586A4
-54324
-104380
+filled-new-array {v2, v3, v4}, [I
+a5 30 26 02 32 04
+a5: 360的opcode -> 对应 Dalvik的opcode(0x24)
+   3: 3个参数
+      26 02: type index(0226)
+            32 04: r-l(v4 v3 v2)
 
-158FC0
-547C0
-104800
+
+com/snow/alldalvikopcode/MainActivity
 
 4C40C+3f7=4C803
 GetEnv()   4072B1D0-406F1000=3A1D0
