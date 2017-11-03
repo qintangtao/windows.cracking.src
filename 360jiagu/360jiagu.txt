@@ -4,7 +4,17 @@ adb shell am start -D -n com.easyread.ebook.s/com.freenovel.activity.SplashActiv
 adb shell am start -D -n com.snow.alldalvikopcode/.MainActivity
 jdb -connect com.sun.jdi.SocketAttach:hostname=127.0.0.1,port=8700
 
+72632
+1BB8
+1586A4
+54324
+104380
 
+158FC0
+547C0
+104800
+
+4C40C+3f7=4C803
 GetEnv()   4072B1D0-406F1000=3A1D0
 FindClass() 406F1000+419B4=407329B4
 RegisterNatives()  406F1000+3AAF8=4072BAF8
@@ -141,13 +151,13 @@ for(i=0x4A4DD000;i<0x4A550000;i++)
   fputc(Byte(i), fp);
 
 
-a1 = 每次取两个字节 xor 0xD0D0
+a1 = 每次取两个字节 xor 0xD0D0 //其实就是对每个字节进行异或
 a1 = 取a1的最低一个字节
 a1 = a1-1
-a1 = a1 << 2
-a1 = table_addr + a1 = 4A513028
-a1 = [a1]
-a1 = table_addr + a1
+a1 = a1 << 2  //a1 = a1 * 4  //table offset
+a1 = table_addr + a1 // table address
+a1 = [a1]              //handle offset
+a1 = table_addr + a1   ////handle address
 
 static=2A0B5F60
 
