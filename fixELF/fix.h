@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "elf.h"
- 
+
 #define SHDRS 16
 /*
 .dynsym .dynstr .hash .rel.dyn .rel.plt
